@@ -1,4 +1,4 @@
-name := "Week1"
+name := "FunctionalBasics"
 
 version := "0.1"
 
