@@ -74,12 +74,12 @@ class TweetSetSuite {
     new TestSets {
       val tweets = TweetReader.tweetMap("mashable") ++ TweetReader.tweetMap("gizmodo")
       val result = toTweetSet(tweets).filter(tw => tw.retweets == 321 || tw.retweets == 205).descendingByRetweet
-      result.foreach(t => println(t.retweets))
+      //result.foreach(t => println(t.retweets))
       assertEquals(321 ,result.head.retweets)
 
-      GoogleVsApple.trending//.foreach(t => println(t.retweets))
-      //println("gap")
-      //(googleTweets union appleTweets)
+      GoogleVsApple.trending.foreach(t => println(t.retweets))
+      assertEquals(38,size(GoogleVsApple.googleTweets))
+      assertEquals(150, size(GoogleVsApple.appleTweets))
     }
   }
 

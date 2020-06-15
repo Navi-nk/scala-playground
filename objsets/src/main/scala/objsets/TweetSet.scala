@@ -165,18 +165,19 @@ class NonEmpty(elem: Tweet, left: TweetSet, right: TweetSet) extends TweetSet {
   }
 
   override def union(that: TweetSet): TweetSet = {
-    (left union (right union that)) incl(elem)
+    left union (right union that) incl elem
   }
 
   //Since adding to front of linkedlist is easier. This returns leastTweeted
   override def mostRetweeted: Tweet = {
-    val rightMostTweeted: Tweet = if(!right.isEmpty)
-      right.mostRetweeted
-    else elem
-    val leftMostTweeted: Tweet = if(!left.isEmpty)
-      left.mostRetweeted
-    else elem
-    if(leftMostTweeted.retweets < rightMostTweeted.retweets) leftMostTweeted else rightMostTweeted
+    if(left.isEmpty && right.isEmpty) elem
+    else if(left.isEmpty) findMin(right.mostRetweeted, elem)
+    else if(right.isEmpty) findMin(left.mostRetweeted, elem)
+    else findMin(findMin(left.mostRetweeted, elem), right.mostRetweeted)
+  }
+
+  def findMin(t1: Tweet, t2:Tweet) = {
+    if(t1.retweets < t2.retweets) t1 else t2
   }
 
   def isEmpty = false
@@ -189,7 +190,7 @@ class NonEmpty(elem: Tweet, left: TweetSet, right: TweetSet) extends TweetSet {
     if(tweetSet.isEmpty) acc
     else {
       val mostRetweeted = tweetSet.mostRetweeted
-      println("most retwitted:" + mostRetweeted.retweets)
+      //println("most retwitted:" + mostRetweeted.retweets)
       accumulateList(tweetSet.remove(mostRetweeted), new Cons(mostRetweeted, acc))
     }
   }
