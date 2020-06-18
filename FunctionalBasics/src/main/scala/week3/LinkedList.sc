@@ -1,8 +1,9 @@
 
-trait List[T] {
+trait List[+T] {
   def isEmpty: Boolean
   def head: T
   def tail: List[T]
+  def prepend[U >: T](x:U) : List[U] = new Cons(x, this)
 }
 
 class Cons[T](val head: T, val tail : List[T]) extends List[T] {
@@ -11,7 +12,7 @@ class Cons[T](val head: T, val tail : List[T]) extends List[T] {
   override def toString: String = s"$head->${tail.toString}"
 }
 
-class Nil[T] extends List[T] {
+object Nil extends List[Nothing] {
   override def isEmpty: Boolean = true
 
   override def head: Nothing = throw new java.util.NoSuchElementException
@@ -21,7 +22,7 @@ class Nil[T] extends List[T] {
   override def toString: String = "nil"
 }
 
-def singleton[T](elem: T) = new Cons[T](elem, new Nil[T])
+def singleton[T](elem: T) = new Cons[T](elem, Nil)
 
 //type erasure and type inferred
 singleton(1)
@@ -34,7 +35,7 @@ def nth[T](n:Int, list: List[T]) : T = {
 }
 
 def createList[T](values:Seq[T]) : List[T] = {
-    if(values.size == 1) new Cons(values.head, new Nil[T])
+    if(values.size == 1) new Cons(values.head, Nil)
     else new Cons(values.head, createList(values.tail))
 }
 
