@@ -82,8 +82,16 @@ class BloxorzSuite {
       ))
     }
 
+  @Test def `from test`: Unit =
+    new Level1 {
+     val a = from(LazyList((Block(Pos(1, 1),Pos(1,1)), List())), Set())
 
-  /*@Test def `optimal solution for level 1 (5pts)`: Unit =
+      //println(a.toList.take(5))
+      println(pathsToGoal.toList)
+    }
+
+
+  @Test def `optimal solution for level 1 (5pts)`: Unit =
     new Level1 {
       assertEquals(Block(goal, goal), solve(solution))
     }
@@ -92,7 +100,7 @@ class BloxorzSuite {
   @Test def `optimal solution length for level 1 (5pts)`: Unit =
     new Level1 {
       assertEquals(optsolution.length, solution.length)
-    }*/
+    }
 
 
   @Rule def individualTestTimeout = new org.junit.rules.Timeout(10 * 1000)
