@@ -1,7 +1,9 @@
+package week1
+
 import scala.util.Random
 
-class MonteCarloPi(iter: Int) {
 
+class MonteCarloPi(iter: Int) {
   def mcCount = {
     val randomX = new Random
     val randomY = new Random
@@ -21,20 +23,13 @@ class MonteCarloPi(iter: Int) {
   def piEstimate = 4.0 * mcCount / iter
 
   //Parallel version
- /* def piEstimatePar = {
-    val ((pi1, pi2),(pi3,pi4)) = parallel(
-      parallel(mcCount(iter/4), mcCount(iter/4)),
-      parallel(mcCount(iter/4), mcCount(iter/4))
-    )
-    4.0 * (pi1 + pi2 + pi3 + pi4) / iter
-  }*/
+  /* def piEstimatePar = {
+     val ((pi1, pi2),(pi3,pi4)) = parallel(
+       parallel(mcCount(iter/4), mcCount(iter/4)),
+       parallel(mcCount(iter/4), mcCount(iter/4))
+     )
+     4.0 * (pi1 + pi2 + pi3 + pi4) / iter
+   }*/
 
 }
 
-object MonteCarloPi {
-  def main(args: Array[String]): Unit = {
-
-    println(new MonteCarloPi(1000).piEstimate)
-
-  }
-}
