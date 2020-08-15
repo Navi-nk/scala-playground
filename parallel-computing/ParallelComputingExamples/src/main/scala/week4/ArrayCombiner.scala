@@ -7,7 +7,7 @@ import week2.ParallelMergeSort
 import scala.collection.mutable.ArrayBuffer
 import scala.reflect.ClassTag
 
-trait Combiner[T <: AnyRef] {
+sealed trait Combiner[T <: AnyRef] {
   def +=(x: T): Combiner[T]
   def combine(that :  Combiner[T]):  Combiner[T]
   def result: Array[T]
