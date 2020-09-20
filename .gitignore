@@ -2,3 +2,5 @@
 target
 out
 *.dat
+null
+*.csv
