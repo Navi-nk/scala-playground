@@ -39,7 +39,7 @@ object Interaction extends InteractionInterface {
       j <- 0 until width
     } yield (i, j)
 
-    val pixels = allCords
+    val pixels = allCords.par
       .map({case (y, x) => Tile(x + offX, y + offY, tile.zoom + 8)})
       .map(tileLocation)
       .map(predictTemperature(temperatures, _))

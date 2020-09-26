@@ -11,7 +11,8 @@ object Manipulation extends ManipulationInterface {
     *         returns the predicted temperature at this location
     */
   def makeGrid(temperatures: Iterable[(Location, Temperature)]): GridLocation => Temperature = {
-    ???
+    val grid = Grid(temperatures)
+    (gridLocation: GridLocation) => grid.accessCell(gridLocation.lat, gridLocation.lon)
   }
 
   /**
@@ -20,7 +21,13 @@ object Manipulation extends ManipulationInterface {
     * @return A function that, given a latitude and a longitude, returns the average temperature at this location
     */
   def average(temperaturess: Iterable[Iterable[(Location, Temperature)]]): GridLocation => Temperature = {
-    ???
+    val aggGrid = temperaturess.par.map(t => Grid(t))
+      .reduce((l,r) => {
+        l += r
+        l
+      })
+    aggGrid divide temperaturess.size
+    (gridLocation: GridLocation) => aggGrid.accessCell(gridLocation.lat, gridLocation.lon)
   }
 
   /**
@@ -29,7 +36,9 @@ object Manipulation extends ManipulationInterface {
     * @return A grid containing the deviations compared to the normal temperatures
     */
   def deviation(temperatures: Iterable[(Location, Temperature)], normals: GridLocation => Temperature): GridLocation => Temperature = {
-    ???
+    val grid = Grid(temperatures)
+    grid -= normals
+    (gl: GridLocation) => grid.accessCell(gl.lat, gl.lon)
   }
 
 

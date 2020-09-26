@@ -23,7 +23,6 @@ object Visualization extends VisualizationInterface {
     if(min._1 < 1) {
       min._2
     }else{
-      // interpolate
       val idw = distanceTpl.map(entry => (1 / pow(entry._1, p_param), entry._2))
       val denom = idw.map(_._1).sum
       idw.map(entry => entry._1 * entry._2).sum  / denom
@@ -100,7 +99,7 @@ object Visualization extends VisualizationInterface {
       i <- 0 until height
       j <- 0 until width
     } yield (i, j)
-    val pixels = coords
+    val pixels = coords.par
       .map(transformCoord)
       .map(predictTemperature(temperatures, _))
       .map(interpolateColor(colors, _))
